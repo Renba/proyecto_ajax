@@ -1,3 +1,15 @@
+<?php
+session_start();
+
+  if(isset($_SESSION["valid"])){
+    if($_SESSION["valid"] == false){
+      header('location: ../views/login.php');
+    }
+
+  }else{
+    header('location: ../views/login.php');
+  }
+ ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -49,7 +61,7 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a href="about.html">Personas</a>
+                        <a href="../views/persons.php">Personas</a>
                     </li>
                     <li>
                         <a href="services.html">Métricas</a>
@@ -64,7 +76,7 @@
                                 <a href="full-width.html">Usuarios</a>
                             </li>
                             <li>
-                                <a href="sidebar.html">Iniciar Sesión/Cerrar Sesión</a>
+                                <a href="../controllers/logout.php">Iniciar Sesión/Cerrar Sesión</a>
                             </li>
                         </ul>
                     </li>

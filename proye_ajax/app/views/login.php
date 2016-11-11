@@ -1,8 +1,9 @@
 <?php
 session_start();
-if($_SESSION['valid'] == true){
+if(isset($_SESSION["valid"]) && $_SESSION["valid"] == true){
   header('location: ../views/index.php');
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
