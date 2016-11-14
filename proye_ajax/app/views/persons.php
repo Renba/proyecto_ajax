@@ -20,6 +20,7 @@
     <!-- Custom Fonts -->
     <link href="../../assets/bootstrap/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <script src="../../assets/js/jquery.min.js"></script>
+    <script src="../../assets/js/jquery-ui.min.js"></script>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -31,29 +32,181 @@
     </style>
     <script type="text/javascript">
       $(document).ready(function(){
-        actualizarTabla();
+        displayTabla();
       });
 
-      function actualizarTabla(){
-        id_numbers = new Array();
+      function displayTabla(){
+        $("#create").html("");
+        $("#body").html("");
+        $( "#action" ).removeClass().addClass( "label label-default" );
+        $("#action").html("Lista de Personas");
+
         $.ajax({
             url:"../controllers/persons_index.php",
             type:"POST",
             dataType:"json",
             success:function(response){
-                id_numbers = response
-                console.info(id_numbers.length);
-                console.info(id_numbers);
-                console.info(id_numbers[0].id);
-                console.info(id_numbers[0].name);
-                console.info(id_numbers[0].last_name);
-                console.info(id_numbers[0].mother_last_name);
-                console.info(id_numbers[0].father.name);
-                if(id_numbers.length == 0 || id_numbers === null){
-                  console.info("No hay personas");
-                }
+              persons = response;
+
+              $.each(persons, function(person) {
+                var name = persons[person].name;
+                var last_name = persons[person].last_name;
+                var mother_last_name = persons[person].mother_last_name;
+                var father = persons[person].father.name;
+                var mother = persons[person].mother.name;
+                var id = persons[person].id;
+                $("#body").append("<tr><td>"+ name +"</td><td>"+
+                                            last_name +"</td><td>"+
+                                            mother_last_name+"</td><td>"+
+                                            father+"</td><td>"+
+                                            mother+"</td><td><button "+
+                                            "class=\"btn btn-primary\" onclick=\"displayEdit("+id+")\">Editar</button></td></tr>");
+              });
+
             }
         });
+        $("#index").show();
+      }
+
+      function displayCreate(){
+        $("#create").html("");
+        $.ajax({
+            url:"persons/persons_create.php",
+            type:"GET",
+            dataType:"html",
+            success:function(response){
+              $("#create").html(response);
+
+            }
+        });
+        $("#index").hide();
+        $("#create").show("fold",2000);
+        $( "#action" ).removeClass().addClass( "label label-success" );
+        $("#action").html("Nueva Persona");
+
+        $.ajax({
+          url:"../controllers/persons_index.php",
+          type:"POST",
+          dataType:"json",
+          success:function(response){
+            persons = response;
+
+            $.each(persons, function(person) {
+              console.log(persons[person].name);
+              var name = persons[person].name +" "+ persons[person].last_name +" "+ persons[person].mother_last_name;
+              var id = persons[person].id
+              $("#father_id").append("<option value="+ id +">"+ name +"</options>");
+            });
+
+              $.each(persons, function(person) {
+                var name = persons[person].name +" "+ persons[person].last_name +" "+ persons[person].mother_last_name;
+                var id = persons[person].id
+                $("#mother_id").append("<option value="+ id +">"+ name +"</options>");
+              });
+
+          }
+        });
+      }
+
+      function createPerson(){
+        var parametros = {
+                "name" : $('#name').val(),
+                "last_name" : $('#last_name').val(),
+                "mother_last_name": $('#mother_last_name').val(),
+                "father_id": $('#father_id').val(),
+                "mother_id": $('#mother_id').val()
+        };
+        $.ajax({
+                data:  parametros,
+                url:   '../controllers/persons_create.php',
+                type:  'post',
+                beforeSend: function () {
+                        $("#notice").html("Procesando, espere por favor...");
+                },
+                success:  function (response) {
+                  $("#notice").html(response);
+                    if(response == "ok"){
+                      displayTabla();
+                    }
+                }
+        });
+
+      }
+
+      function displayEdit(id){
+        $("#create").html("");
+        var parametros = {
+                "id" : id
+        };
+        $.ajax({
+            data: parametros,
+            url:"persons/persons_edit.php",
+            type:"GET",
+            dataType:"html",
+            success:function(response){
+              $("#create").html(response);
+
+            }
+        });
+        $("#index").hide();
+        $("#create").show("fold",2000);
+        $( "#action" ).removeClass().addClass( "label label-primary" );
+        $("#action").html("Editar Persona");
+
+        $.ajax({
+          url:"../controllers/persons_index.php",
+          type:"POST",
+          dataType:"json",
+          success:function(response){
+            persons = response;
+
+            $.each(persons, function(person) {
+              console.log(persons[person].name);
+              var name = persons[person].name +" "+ persons[person].last_name +" "+ persons[person].mother_last_name;
+              var id = persons[person].id
+              $("#father_id").append("<option value="+ id +">"+ name +"</options>");
+            });
+
+              $.each(persons, function(person) {
+                var name = persons[person].name +" "+ persons[person].last_name +" "+ persons[person].mother_last_name;
+                var id = persons[person].id
+                $("#mother_id").append("<option value="+ id +">"+ name +"</options>");
+              });
+
+          }
+        });
+      }
+
+
+
+
+
+      function editPerson(){
+        var parametros = {
+                "id" : $('#id').val(),
+                "name" : $('#name').val(),
+                "last_name" : $('#last_name').val(),
+                "mother_last_name": $('#mother_last_name').val(),
+                "father_id": $('#father_id').val(),
+                "mother_id": $('#mother_id').val()
+        };
+        $.ajax({
+                data:  parametros,
+                url:   '../controllers/persons_edit.php',
+                type:  'post',
+                beforeSend: function () {
+                        $("#notice").html("Procesando, espere por favor...");
+                },
+                success:  function (response) {
+                  $("#notice").html(response);
+                    if(response == "ok"){
+                      displayTabla();
+                    }
+                }
+        });
+
+
+
       }
     </script>
 </head>
@@ -116,37 +269,41 @@
         <div class="row">
           <div class="row">
               <div class="col-lg-10">
-                  <h1 class="page-header">Sidebar Page
-                      <small>Subheading</small>
+                  <h1 class="page-header" onclick="displayTabla();"><label class="label label-default"><span class="glyphicon glyphicon-th-list"></span> Personas</label>
+                      <small><label id="action" class="label label-default">Lista de Personas</label></small>
                   </h1>
               </div>
               <div class="col-lg-2">
                 <h1 class="page-header">
-                  <button type="button" class="btn btn-success">Agregar Persona</button>
+                  <button type="button" class="btn btn-success" onclick="displayCreate();"><span class="glyphicon glyphicon-plus"></span> Agregar Persona</button>
                 </h1>
               </div>
           </div>
-          <table class="table">
-            <thead>
-              <tr>
-                <th>Nombre</th>
-                <th>Apellido Paterno</th>
-                <th>Apellido Materno</th>
-                <th>
-                  Padre
-                </th>
-                <th>
-                  Madre
-                </th>
-                <th>
-                  options
-                </th>
+          <div id="index">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Nombre</th>
+                  <th>Apellido Paterno</th>
+                  <th>Apellido Materno</th>
+                  <th>
+                    Padre
+                  </th>
+                  <th>
+                    Madre
+                  </th>
+                  <th>
+                    options
+                  </th>
 
-              </tr>
-            </thead>
-            <tbody id="body">
-            </tbody>
-          </table>
+                </tr>
+              </thead>
+              <tbody id="body">
+              </tbody>
+            </table>
+          </div>
+          <div id="create">
+          </div>
         </div>
         <!-- /.row -->
 

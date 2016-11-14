@@ -3,10 +3,11 @@
 include_once 'connection.php';
 
 
-function saveInfo($person)
+function saveInfo($person,$father_id,$mother_id)
 {
-    $sentence_sql = "INSERT INTO persons ( name, last_name, mother_last_name) VALUES
-        ('" . $person->getName() . "','" . $person->getLastName() . "','". $person->getMotherLastName() . "');";
+    $sentence_sql = "INSERT INTO persons ( name, last_name, mother_last_name, father_id, mother_id) VALUES
+        ('" . $person->getName() . "','" . $person->getLastName() . "','". $person->getMotherLastName() . "',"
+        . $father_id . ",". $mother_id . ");";
     return execute_query($sentence_sql);
 }
 
@@ -32,12 +33,12 @@ function deletePerson($id)
 
 }
 
-function updatePerson($person)
+function updatePerson($person, $father_id, $mother_id)
 {
-    $sentence_sql = "UPDATE persons SET name='" . $person->getName() . "',last_name='" . $person->getLastName() . "',mother_last_name='" .
-        $person->getMotherLastName() . "',father_id='" . $person->getFather()->getId() ."',mother_id='". $person->getMother()->getId() ."' WHERE id='" .
-        $person->getId(). "';";
+  $id=$person->getId();
+  $name=$person->getName();
+  $last_name=$person->getLastName();
+  $sentence_sql = "UPDATE persons SET name ='$name',last_name ='$last_name', father_id = $father_id, mother_id = $mother_id WHERE id = '$id'";
+  return execute_query($sentence_sql);
 
-    execute_query($sentence_sql);
-    return true;
 }

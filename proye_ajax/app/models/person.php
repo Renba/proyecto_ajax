@@ -1,6 +1,6 @@
 <?php
 /**
- * Class User
+ * Class Person
  */
 class Person
 {
@@ -86,13 +86,35 @@ class Person
 
   public function fatherToJson()
    {
+     if($this->father == null){
        return array(
-            'id' => $this->id,
-            'name' => $this->name,
-            'last_name' => $this->last_name,
-            'mother_last_name' => $this->mother_last_name,
+         'id' => null,
+         'name' => "No registrado",
        );
+
+     }else{
+       return array(
+         'id' => $this->father->getId(),
+         'name' => $this->father->getName(),
+       );
+     }
    }
+
+   public function motherToJson()
+    {
+      if($this->mother == null){
+        return array(
+          'id' => null,
+          'name' => "No registrado",
+        );
+
+      }else{
+        return array(
+          'id' => $this->mother->getId(),
+          'name' => $this->mother->getName(),
+        );
+      }
+    }
 
    public function toJsonComplete(){
      return array(
@@ -100,7 +122,8 @@ class Person
        'name' => $this->name,
        'last_name' => $this->last_name,
        'mother_last_name' => $this->mother_last_name,
-       'father' => $this->toJson(),
+       'father' => $this->fatherToJson(),
+       'mother' => $this->motherToJson()
      );
    }
 
