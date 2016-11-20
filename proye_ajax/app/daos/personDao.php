@@ -28,17 +28,17 @@ function getPerson($id)
 function deletePerson($id)
 {
     $sentence_sql = "DELETE FROM persons WHERE id='$id';";
-    execute_query($sentence_sql);
-    return true;
+    return execute_query($sentence_sql);
 
 }
 
 function updatePerson($person, $father_id, $mother_id)
 {
-  $id=$person->getId();
-  $name=$person->getName();
-  $last_name=$person->getLastName();
-  $sentence_sql = "UPDATE persons SET name ='$name',last_name ='$last_name', father_id = $father_id, mother_id = $mother_id WHERE id = '$id'";
+  $id = $person->getId();
+  $name = $person->getName();
+  $last_name = $person->getLastName();
+  $mother_last_name = $person->getMotherLastName();
+  $sentence_sql = "UPDATE persons SET name ='$name',last_name ='$last_name',mother_last_name = '$mother_last_name', father_id = $father_id, mother_id = $mother_id WHERE id = '$id'";
   return execute_query($sentence_sql);
 
 }

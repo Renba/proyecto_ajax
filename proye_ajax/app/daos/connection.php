@@ -8,3 +8,8 @@ function execute_query($query){
   $connection = mysqli_connect(SERVER, USER, PASSWORD, DB_NAME) or die ("Error " . mysqli_error($connection));
   return mysqli_query($connection, $query);
 }
+
+function getConnection(){
+  $connection = mysqli_connect(SERVER, USER, PASSWORD, DB_NAME) or die ("Error " . mysqli_error($connection));
+  return $connection;
+}

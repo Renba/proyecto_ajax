@@ -26,4 +26,6 @@ if($_POST['mother_id'] != ""){
 if(saveInfo($person,$father_id,$mother_id)){
   $status= "ok";
 }
-  echo($status);
+$conn = getConnection();
+$last_id = $conn->insert_id;
+echo 'LAST_INSERT_ID: '.$last_id;
