@@ -1,10 +1,10 @@
-<?php include('layout.php'); ?>
+<?php include('layouts/layout.php'); ?>
 <script src="../../assets/js/person.js"></script>
 </head>
 
     <!-- Navigation -->
 <body>
-  <?php include('nav_bar.php'); ?>
+  <?php include('layouts/nav_bar.php'); ?>
 
     <!-- Header Carousel -->
 

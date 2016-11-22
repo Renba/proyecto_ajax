@@ -18,16 +18,20 @@ if(saveInfo($indicator)){
 $result = getIndicatorByName($indicator->getName());
 if($result->num_rows > 0){
     $row = $result->fetch_assoc();
-    $indicatorForName = new Indicator();
-    $indicatorForName->setId( $row['id']);
-    $indicatorForName->setName( $row['name']);
+    $indicatorByName = new Indicator();
+    $indicatorByName->setId( $row['id']);
+    $indicatorByName->setName( $row['name']);
 }
 
 require_once('../daos/indicatorOptionsDao.php');
 require_once('../models/indicator_option.php');
 
 foreach($indicator->getOptions() as $option){
-  saveIndicatorOption();
+  $indicatorOption = new IndicatorOption();
+  $indicatorOption->setOptionName($option);
+  $indicatorOption->setIndicatorId($indicatorByName->getId());
+  saveIndicatorOption($indicatorOption);
+  $status= "ok";
 }
 
 

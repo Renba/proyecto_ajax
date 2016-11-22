@@ -5,7 +5,7 @@ if(isset($_SESSION["valid"]) && $_SESSION["valid"] == true){
 }
 
 ?>
-<?php include('layout.php'); ?>
+<?php include('layouts/layout.php'); ?>
     <link href="../../assets/css/login.css" rel="stylesheet" type="text/css">
     <script src="../../assets/js/login.js"></script>
 </head>

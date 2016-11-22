@@ -30,7 +30,7 @@ require_once('../../daos/indicatorDao.php');
           <div class="panel-body">
             <h4><?= $indicator->getName()?></h4>
             <a href="#" class="btn btn-primary" onclick="displayIndicator(<?= $indicator->getId() ?>)">Ver</a>
-            <a href="#" class="btn btn-success" onclick="editIndicator(<?= $indicator->getId() ?>)">Editar</a>
+            <a href="#" class="btn btn-success" onclick="displayEdit(<?= $indicator->getId() ?>)">Editar</a>
             <a href="#" class="btn btn-danger" onclick="deleteIndicator(<?= $indicator->getId() ?>)">Eliminar</a>
 
           </div>

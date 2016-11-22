@@ -42,12 +42,12 @@ class IndicatorOption
 
   public function getIndicatorId()
   {
-    return $this->options;
+    return $this->indicator_id;
   }
 
-  public function setIndicatorId($options)
+  public function setIndicatorId($indicator_id)
   {
-    $this->options = $options;
+    $this->indicator_id = $indicator_id;
   }
 
 }

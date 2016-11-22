@@ -5,7 +5,7 @@ include_once 'connection.php';
 
 function saveIndicatorOption($indicatorOption)
 {
-    $sentence_sql = "INSERT INTO indicator_options (name, indicator_id) VALUES
+    $sentence_sql = "INSERT INTO indicator_options (option_name, indicator_id) VALUES
         ('" . $indicatorOption->getOptionName() . "',". $indicatorOption->getIndicatorId() .");";
     return execute_query($sentence_sql);
 }

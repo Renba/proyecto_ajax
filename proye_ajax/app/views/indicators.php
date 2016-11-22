@@ -1,4 +1,4 @@
-<?php include('layout.php'); ?>
+<?php include('layouts/layout.php'); ?>
 <style media="screen">
   .indicator-inputs{
     margin-bottom: 20px;
@@ -29,6 +29,7 @@
         dataType:"html",
         success:function(response){
           $("#action").html(response);
+          displayIndicators();
         }
     });
   }
@@ -77,6 +78,30 @@ var option_number = 2;
     });
   }
 
+  function displayEdit(id){
+    var parametros = {
+      "id" : id
+    };
+    $.ajax({
+        data: parametros,
+        url:"indicator/indicator_edit.php",
+        type:"GET",
+        dataType:"html",
+        success:function(response){
+          $("#action").html(response);
+        }
+    });
+  }
+
+  function editIndicator(){
+    $.post('../controllers/indicator_edit.php', $('#form').serialize(), function(response){
+       $("#notice").html(response);
+       if(response == 'ok'){
+         displayIndicators();
+       }
+    });
+  }
+
 
 
 
@@ -85,7 +110,7 @@ var option_number = 2;
 
     <!-- Navigation -->
 <body>
-  <?php include('nav_bar.php'); ?>
+  <?php include('layouts/nav_bar.php'); ?>
 
     <!-- Header Carousel -->
 

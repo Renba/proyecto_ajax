@@ -10,7 +10,7 @@ session_start();
     header('location: ../views/login.php');
   }
  ?>
- <?php include('layout.php'); ?>
+ <?php include('layouts/layout.php'); ?>
 
 </head>
 
@@ -19,7 +19,7 @@ session_start();
 
     <!-- Navigation -->
 
-    <?php include('nav_bar.php'); ?>
+    <?php include('layouts/nav_bar.php'); ?>
 
     <!-- Header Carousel -->
     <header id="myCarousel" class="carousel slide">
