@@ -10,9 +10,9 @@ function saveIndicatorOption($indicatorOption)
     return execute_query($sentence_sql);
 }
 
-function getIndicatorOptions($id_metric)
+function getIndicatorOptions($id_indicator)
 {
-    $sentence_sql = "SELECT * FROM indicator_options where indicator_id='$id_metric'";
+    $sentence_sql = "SELECT * FROM indicator_options where indicator_id='$id_indicator'";
     $result = execute_query($sentence_sql);
     return $result;
 }
@@ -38,13 +38,11 @@ function deleteIndicatorOptions($indicator_id)
 
 }
 
-function updateIndicatorOption($person)
+function updateIndicatorOption($indicator_option)
 {
-  $id = $person->getId();
-  $name = $person->getName();
-  $last_name = $person->getLastName();
-  $mother_last_name = $person->getMotherLastName();
-  $sentence_sql = "UPDATE indicator_options SET name ='$name' WHERE id = '$id'";
+  $id = $indicator_option->getId();
+  $option_name = $indicator_option->getOptionName();
+  $sentence_sql = "UPDATE indicator_options SET option_name ='$option_name' WHERE id = '$id'";
   return execute_query($sentence_sql);
 
 }

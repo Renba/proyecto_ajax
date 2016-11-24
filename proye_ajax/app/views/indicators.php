@@ -103,7 +103,7 @@
     });
   }
 
-  function deletePerson(id){
+  function deleteIndicator(id){
     if (window.confirm('Seguro que quieres eliminar al indicador seleccionado?')){
       var parametros = {
         "id" : id,
