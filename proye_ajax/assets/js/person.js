@@ -9,7 +9,7 @@ function displayTabla(){
   $("#action").html("Lista de Personas");
 
   $.ajax({
-      url:"../controllers/persons_index.php",
+      url:"../controllers/person/persons_index.php",
       type:"POST",
       dataType:"json",
       success:function(response){
@@ -28,6 +28,7 @@ function displayTabla(){
                                       father+"</td><td>"+
                                       mother+"</td><td><button "+
                                       "class=\"btn btn-primary\" onclick=\"displayEdit("+id+")\">Editar</button>"+
+                                      "<button class=\"btn btn-info\" onclick=\"evaluatePerson("+id+")\" >Evaluar Persona</button>"+
                                       "<button class=\"btn btn-danger\" onclick=\"deletePerson("+id+")\">Eliminar</button>"+
                                       "</td></tr>");
         });
@@ -54,7 +55,7 @@ function displayCreate(){
   $("#action").html("Nueva Persona");
 
   $.ajax({
-    url:"../controllers/persons_index.php",
+    url:"../controllers/person/persons_index.php",
     type:"POST",
     dataType:"json",
     success:function(response){
@@ -86,7 +87,7 @@ function createPerson(){
   };
   $.ajax({
           data:  parametros,
-          url:   '../controllers/persons_create.php',
+          url:   '../controllers/person/persons_create.php',
           type:  'post',
           beforeSend: function () {
                   $("#notice").html("Procesando, espere por favor...");
@@ -122,7 +123,7 @@ function displayEdit(id){
   $("#action").html("Editar Persona");
 
   $.ajax({
-    url:"../controllers/persons_index.php",
+    url:"../controllers/person/persons_index.php",
     type:"POST",
     dataType:"json",
     success:function(response){
@@ -156,7 +157,7 @@ function editPerson(){
   };
   $.ajax({
           data:  parametros,
-          url:   '../controllers/persons_edit.php',
+          url:   '../controllers/person/persons_edit.php',
           type:  'post',
           beforeSend: function () {
                   $("#notice").html("Procesando, espere por favor...");
@@ -181,7 +182,7 @@ function deletePerson(id){
     };
     $.ajax({
             data:  parametros,
-            url:   '../controllers/persons_delete.php',
+            url:   '../controllers/person/persons_delete.php',
             type:  'post',
             success:  function (response) {
                 if(response == "ok"){
@@ -193,5 +194,25 @@ function deletePerson(id){
     });
 
   }
+}
+
+function evaluatePerson(id){
+  $("#create").html("");
+  $("#index").hide();
+  var parametros = {
+    "id" : id,
+  };
+  
+  $.ajax({
+      data:parametros,
+      url:"evaluation/evaluation_index.php",
+      type:"GET",
+      dataType:"html",
+      success:function(response){
+        $("#create").html(response);
+
+      }
+  });
+
 
 }

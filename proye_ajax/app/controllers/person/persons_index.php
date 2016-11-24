@@ -1,6 +1,6 @@
 <?php
-require_once('../models/person.php');
-require_once('../daos/personDao.php');
+require_once('../../models/person.php');
+require_once('../../daos/personDao.php');
   $persons = array();
    $result = getPersons();
 

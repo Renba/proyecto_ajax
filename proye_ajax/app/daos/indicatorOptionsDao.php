@@ -31,6 +31,13 @@ function deleteIndicatorOption($id)
 
 }
 
+function deleteIndicatorOptions($indicator_id)
+{
+    $sentence_sql = "DELETE FROM indicator_options WHERE indicator_id='$indicator_id';";
+    return execute_query($sentence_sql);
+
+}
+
 function updateIndicatorOption($person)
 {
   $id = $person->getId();

@@ -1,5 +1,5 @@
 <?php
-require_once('../models/person.php');
+require_once('../../models/person.php');
 
 
 $person = new Person();
@@ -13,7 +13,7 @@ $father_id = "NULL";
 $mother_id = "NULL";
 
 
-require_once('../daos/personDao.php');
+require_once('../../daos/personDao.php');
 
 if($_POST['father_id'] != ""){
   $father_id = $_POST['father_id'];

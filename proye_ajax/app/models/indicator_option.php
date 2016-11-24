@@ -7,6 +7,7 @@ class IndicatorOption
   private $id;
   private $option_name;
   private $indicator_id;
+  private $selected = false;
   /**
    * Usuario constructor.
    */
@@ -49,5 +50,16 @@ class IndicatorOption
   {
     $this->indicator_id = $indicator_id;
   }
+
+  public function setSelected()
+  {
+    $this->selected = true;
+  }
+
+  public function isSelected(){
+    return $this->selected;
+  }
+
+
 
 }

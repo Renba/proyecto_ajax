@@ -40,8 +40,8 @@ function deleteIndicator($id)
 
 function updateIndicator($indicator)
 {
-  $id = $person->getId();
-  $name = $person->getName();
+  $id = $indicator->getId();
+  $name = $indicator->getName();
   $sentence_sql = "UPDATE indicators SET name ='$name' WHERE id = '$id'";
   return execute_query($sentence_sql);
 

@@ -22,6 +22,8 @@
   }
 
   function displayCreate(){
+    option_number = 2;
+
     $("#action").html("");
     $.ajax({
         url:"indicator/indicator_create.php",
@@ -29,21 +31,20 @@
         dataType:"html",
         success:function(response){
           $("#action").html(response);
-          displayIndicators();
         }
     });
   }
 
     function createIndicator(){
-      $.post('../controllers/indicator_create.php', $('#form').serialize(), function(response){
+      $.post('../controllers/indicator/indicator_create.php', $('#form').serialize(), function(response){
          $("#notice").html(response);
          if(response == 'ok'){
-
+           displayIndicators();
          }
       });
     }
 
-var option_number = 2;
+    var option_number = 2;
 
     function addOption(){
       option_number += 1;
@@ -94,7 +95,7 @@ var option_number = 2;
   }
 
   function editIndicator(){
-    $.post('../controllers/indicator_edit.php', $('#form').serialize(), function(response){
+    $.post('../controllers/indicator/indicator_update.php', $('#form').serialize(), function(response){
        $("#notice").html(response);
        if(response == 'ok'){
          displayIndicators();
@@ -102,8 +103,26 @@ var option_number = 2;
     });
   }
 
+  function deletePerson(id){
+    if (window.confirm('Seguro que quieres eliminar al indicador seleccionado?')){
+      var parametros = {
+        "id" : id,
+      };
+      $.ajax({
+              data:  parametros,
+              url:   '../controllers/indicator/indicator_delete.php',
+              type:  'post',
+              success:  function (response) {
+                  if(response == "ok"){
+                    displayIndicators();
+                  }else{
+                    alert(response);
+                  }
+              }
+      });
 
-
+    }
+  }
 
 </script>
 </head>
@@ -119,7 +138,7 @@ var option_number = 2;
       <div class="row">
           <div class="col-lg-10">
               <h2 class="page-header">
-                <label class="label label-default"><span class="glyphicon glyphicon-th-list"></span> Indicadores</label>
+                <label class="label label-default" onclick="displayIndicators();"><span class="glyphicon glyphicon-th-list"></span> Indicadores</label>
               </h2>
           </div>
           <div class="col-lg-2">
@@ -167,11 +186,7 @@ var option_number = 2;
     <script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
 
     <!-- Script to Activate the Carousel -->
-    <script>
-    $('.carousel').carousel({
-        interval: 5000 //changes the speed
-    })
-    </script>
+
 
 </body>
 

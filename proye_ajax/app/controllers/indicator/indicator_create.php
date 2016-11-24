@@ -1,5 +1,5 @@
 <?php
-require_once('../models/indicator.php');
+require_once('../../models/indicator.php');
 $indicator = new Indicator();
 $status="No se pudo crear el indicador";
 
@@ -7,7 +7,7 @@ $status="No se pudo crear el indicador";
 $indicator->setName($_POST["name"]);
 $indicator->setOptions($_POST["options"]);
 
-require_once('../daos/indicatorDao.php');
+require_once('../../daos/indicatorDao.php');
 
 if(saveInfo($indicator)){
   $status= "ok";
@@ -23,8 +23,8 @@ if($result->num_rows > 0){
     $indicatorByName->setName( $row['name']);
 }
 
-require_once('../daos/indicatorOptionsDao.php');
-require_once('../models/indicator_option.php');
+require_once('../../daos/indicatorOptionsDao.php');
+require_once('../../models/indicator_option.php');
 
 foreach($indicator->getOptions() as $option){
   $indicatorOption = new IndicatorOption();

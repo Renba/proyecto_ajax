@@ -1,5 +1,5 @@
 <?php
-require_once('../models/person.php');
+require_once('../../models/person.php');
 
 $person = new Person();
 $status = "No se pudo guardar la informacion de la persona" ;

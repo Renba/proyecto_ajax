@@ -24,11 +24,17 @@ if($result->num_rows > 0){
   }
 }
 ?>
+<script type="text/javascript">
+  option_number = <?= count($indicator_options) ?>;
+</script>
 <div class="col-lg-6">
   <form id="form">
     <div class="indicator-inputs">
-      <input type="text" class="form-control hidden" id="id" placeholder="Nombre"
-        value="<?= $indicator->getId()?>" required>
+        <div class="form-group hidden">
+          <label for="formGroupExampleInput">Nombre de Indicador</label>
+          <input type="text" class="form-control"  name="id" placeholder="Nombre"
+            required value="<?= $indicator->getId() ?>">
+        </div>
 
       <div class="form-group">
         <label for="formGroupExampleInput">Nombre de Indicador</label>
@@ -40,12 +46,16 @@ if($result->num_rows > 0){
         <h1>Opciones de Indicator</h1>
 
         <?php if(count($indicator_options) > 0) { ?>
-           <?php foreach ($indicator_options as $option) {?>
+           <?php
+           $index = 1;
+           foreach ($indicator_options as $option) {?>
              <div class="form-group">
-               <label for="formGroupExampleInput">Opcion 1</label>
+               <label for="formGroupExampleInput">Opcion <?= $index ?></label>
                <input type="text" class="form-control"  name="options[]" placeholder="Nombre" value="<?= $option->getOptionName()?>" required>
              </div>
-           <?php }    ?>
+           <?php
+           $index++;
+         }    ?>
         <?php } ?>
 
 
