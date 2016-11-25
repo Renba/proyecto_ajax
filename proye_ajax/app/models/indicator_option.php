@@ -8,6 +8,7 @@ class IndicatorOption
   private $option_name;
   private $indicator_id;
   private $selected = false;
+  private $times;
   /**
    * Usuario constructor.
    */
@@ -60,6 +61,23 @@ class IndicatorOption
     return $this->selected;
   }
 
+  public function setTimes($times)
+  {
+    $this->times = $times;
+  }
 
+  public function getTimes(){
+    return $this->times;
+  }
+
+  public function toJson(){
+    return array(
+      'id' => $this->id,
+      'option_name' => $this->option_name,
+      'indicator_id' => $this->indicator_id,
+      'times' => $this->times,
+    );
+
+  }
 
 }

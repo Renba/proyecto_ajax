@@ -5,6 +5,54 @@
 <script type="text/javascript" src="../../assets/jqplot/jqplot.categoryAxisRenderer.js"></script>
 <script type="text/javascript" src="../../assets/jqplot/jqplot.pointLabels.js"></script>
 <link rel="stylesheet" type="text/css" hrf="../../assets/jqplot/jquery.jqplot.css" />
+<script type="text/javascript">
+$(document).ready(function(){
+  displayIndicators();
+});
+
+  function displayIndicators(){
+    $.ajax({
+        url:"evaluation/evaluation_indicators.php",
+        type:"GET",
+        dataType:"html",
+        success:function(response){
+          $("#indicators").html(response);
+
+        }
+    });
+  }
+
+  function displayReport(indicator_id){
+    var parametros = {
+      "indicator_id": indicator_id,
+    };
+    $.ajax({
+        data: parametros,
+        url:"../controllers/evaluation/evaluation_indicator_report.php",
+        type:"GET",
+        dataType:"json",
+        success:function(response){
+          var evaluations = response;
+          var data = new Array();
+          var options = new Array();
+          $.each(evaluations, function(evaluation) {
+            var option_name = evaluations[evaluation].option_name;
+            options.push(option_name)
+            var times = evaluations[evaluation].times;
+            data.push(times);
+          });
+          $('#chart1').html("");
+          drawTable(data,options);
+          $("#indicator-"+indicator_id).addClass("active");
+          $('#indicators a').click(function(){
+            $(this).parent().children('a').not(this).removeClass('active');
+            $(this).addClass('active');
+          });
+
+        }
+    });
+  }
+</script>
 </head>
 
 <body>
@@ -20,7 +68,7 @@
                   <small>Indicadores</small>
               </h1>
               <ol class="breadcrumb">
-                  <li><a href="index.html">Inicio</a>
+                  <li><a href="index.php">Inicio</a>
                   </li>
                   <li class="active">Reportes</li>
               </ol>
@@ -29,34 +77,13 @@
         <!-- Marketing Icons Section -->
         <div class="row">
             <!-- Sidebar Column -->
-            <div class="col-md-3">
-                <div class="list-group">
-                    <a href="index.html" class="list-group-item">Home</a>
-                    <a href="about.html" class="list-group-item">About</a>
-                    <a href="services.html" class="list-group-item">Services</a>
-                    <a href="contact.html" class="list-group-item">Contact</a>
-                    <a href="portfolio-1-col.html" class="list-group-item">1 Column Portfolio</a>
-                    <a href="portfolio-2-col.html" class="list-group-item">2 Column Portfolio</a>
-                    <a href="portfolio-3-col.html" class="list-group-item">3 Column Portfolio</a>
-                    <a href="portfolio-4-col.html" class="list-group-item">4 Column Portfolio</a>
-                    <a href="portfolio-item.html" class="list-group-item">Single Portfolio Item</a>
-                    <a href="blog-home-1.html" class="list-group-item">Blog Home 1</a>
-                    <a href="blog-home-2.html" class="list-group-item">Blog Home 2</a>
-                    <a href="blog-post.html" class="list-group-item">Blog Post</a>
-                    <a href="full-width.html" class="list-group-item">Full Width Page</a>
-                    <a href="sidebar.html" class="list-group-item ">Sidebar Page</a>
-                    <a href="faq.html" class="list-group-item">FAQ</a>
-                    <a href="404.html" class="list-group-item">404</a>
-                    <a href="pricing.html" class="list-group-item">Pricing Table</a>
-                </div>
+            <div class="col-md-3" id="indicators">
             </div>
             <!-- Content Column -->
             <div class="col-md-9" id="content">
-              <h1 class="page-header"><label class="label label-info" id="title">Indicadores</label>
-              </h1>
 
               <div id="info1"></div>
-              <div id="chart1" style="height:500px;width:800px; ">
+              <div id="chart1" style="height:400px;width:800px; ">
               </div>
             </div>
         </div>
@@ -64,10 +91,10 @@
         <div class="well">
             <div class="row">
                 <div class="col-md-8">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias, expedita, saepe, vero rerum deleniti beatae veniam harum neque nemo praesentium cum alias asperiores commodi.</p>
+                    <p>Proyecto de la Asignatura de Desarrollo web con Ajax de la Facultad de Matemáticas</p>
                 </div>
                 <div class="col-md-4">
-                    <a class="btn btn-lg btn-default btn-block" href="#">Call to Action</a>
+                    <a class="btn btn-lg btn-default btn-block" href="reports.php">Indicadores</a>
                 </div>
             </div>
         </div>
@@ -94,10 +121,11 @@
     <!-- Script to Activate the Carousel -->
     <script type="text/javascript">
     $(document).ready(function(){
-      var data = [2,6,7,10,12,12];
-      var options = ['Totalmente de acuerdo', 'De acuerdo', 'Casi de acuerdo', 'En desacuerdo', 'No me gusto nada', 'lo odio'];
+      var data = [0];
+      var options = [''];
 
       drawTable(data, options);
+
       });
       function drawTable(data, options) {
         $.jqplot.config.enablePlugins = false;
@@ -119,11 +147,6 @@
             highlighter: { show: false }
         });
 
-        $('#chart1').bind('jqplotDataClick',
-            function (ev, seriesIndex, pointIndex, data) {
-                $('#info1').html('series: '+seriesIndex+', point: '+pointIndex+', data: '+data);
-            }
-        );
       }
     </script>
 

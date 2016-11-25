@@ -7,6 +7,8 @@ class Evaluation
   private $person_id;
   private $indicator_id;
   private $option_id;
+  private $option_name;
+  private $indicator_number = 0;
   /**
    * Usuario constructor.
    */
@@ -49,5 +51,36 @@ class Evaluation
   {
     $this->option_id = $option_id;
   }
+
+  public function getOptionName()
+  {
+    return $this->option_name;
+  }
+
+  public function setOptionName($option_name)
+  {
+    $this->option_name = $option_name;
+  }
+
+  public function getIndicatorNumber()
+  {
+    return $this->indicator_number;
+  }
+
+  public function setIndicatorNumber($indicator_number)
+  {
+    $this->indicator_number = $indicator_number;
+  }
+
+
+  public function toJson(){
+    return array(
+      'indicator_id' => $this->indicator_id,
+      'option_id' => $this->option_id,
+      'option_name' => $this->option_name,
+      'indicator_number' => $this->indicator_number,
+    );
+  }
+
 
 }

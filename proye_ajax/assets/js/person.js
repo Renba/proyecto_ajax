@@ -202,7 +202,7 @@ function evaluatePerson(id){
   var parametros = {
     "id" : id,
   };
-  
+
   $.ajax({
       data:parametros,
       url:"evaluation/evaluation_index.php",
