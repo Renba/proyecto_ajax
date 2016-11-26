@@ -157,7 +157,7 @@ function editPerson(){
   };
   $.ajax({
           data:  parametros,
-          url:   '../controllers/person/persons_edit.php',
+          url:   '../controllers/person/persons_update.php',
           type:  'post',
           beforeSend: function () {
                   $("#notice").html("Procesando, espere por favor...");

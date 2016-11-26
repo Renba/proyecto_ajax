@@ -72,6 +72,14 @@ class User
     $this->name = $name;
   }
 
+  public function toJson(){
+    return array(
+      'id' => $this->id,
+      'email' => $this->email,
+      'name' => $this->name,
+    );
+  }
+
 
 
 }

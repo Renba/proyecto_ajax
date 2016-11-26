@@ -17,7 +17,7 @@ if($_POST['father_id'] != ""){
 if($_POST['mother_id'] != ""){
   $mother_id = $_POST['mother_id'] ;
 }
-require_once('../daos/personDao.php');
+require_once('../../daos/personDao.php');
 
 if(updatePerson($person,$father_id,$mother_id)){
   $status= "ok";

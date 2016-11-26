@@ -6,15 +6,9 @@ include_once 'connection.php';
 
 function saveInfo($user)
 {
-//debo encontrar otra manera de hacer este query:
     $sentence_sql = "INSERT INTO users ( email, password, name) VALUES
         ('" . $user->getEmail() . "','" . $user->getPassword() . "','" . $user->getName() . "');";
-
-//    echo $sentence_sql;
-
-
     return execute_query($sentence_sql);
-
 }
 
 function getUsers()
@@ -24,35 +18,27 @@ function getUsers()
     return $users;
 }
 
-function getUser($matricula)
+function getUser($id)
 {
-    $sentence_sql = "SELECT * FROM users WHERE matricula='$matricula';";
+    $sentence_sql = "SELECT * FROM users WHERE id='$id';";
     $users = execute_query($sentence_sql);
     return $users;
 }
 
-function deleteUser($matricula)
+function deleteUser($id)
 {
-    //como todo es cascade, bastará con borrar desde la tabla libro:
-
-    $sentence_sql = "DELETE FROM users WHERE matricula='$matricula';";
-
-    execute_query($sentence_sql);
-
-    //si hay error, lo muestra antes de llegar a true.
-    return true;
-
+    $sentence_sql = "DELETE FROM users WHERE id='$id';";
+    return execute_query($sentence_sql);
 }
 
 function updateUser($user)
 {
-    $sentence_sql = "UPDATE users SET matricula='" . $user->getMatricula() .
-        "',nombre='" . $user->getNombre() . "',correo='" . $user->getCorreo() . "',contrasena='" .
-        $user->getContrasena() . "',tipo_user_id='" . $user->getTipo_user_id() . "' WHERE matricula='" .
-        $user->getMatricula() . "';";
-
-    execute_query($sentence_sql);
-    header('location: ../vistas/vista-muestra_users.php');
+  $id = $user->getId();
+  $name = $user->getName();
+  $email = $user->getEmail();
+  $password = $user->getPassword();
+  $sentence_sql = "UPDATE users SET name ='$name', email ='$email',password = '$password' WHERE id = '$id'";
+  return execute_query($sentence_sql);
 }
 
 function getCredentialsUser($email, $password){

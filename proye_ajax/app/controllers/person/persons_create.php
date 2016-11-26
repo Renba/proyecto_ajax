@@ -28,4 +28,4 @@ if(saveInfo($person,$father_id,$mother_id)){
 }
 $conn = getConnection();
 $last_id = $conn->insert_id;
-echo 'LAST_INSERT_ID: '.$last_id;
+echo $status;
